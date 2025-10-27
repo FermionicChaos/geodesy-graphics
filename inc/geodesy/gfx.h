@@ -1,0 +1,11 @@
+#pragma once
+#ifndef GEODESY_GFX_H
+#define GEODESY_GFX_H
+
+#include "gfx/font.h"
+#include "gfx/mesh.h"
+#include "gfx/material.h"
+#include "gfx/node.h"
+#include "gfx/model.h"
+
+#endif // !GEODESY_GFX_H

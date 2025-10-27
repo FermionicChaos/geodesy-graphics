@@ -43,8 +43,14 @@ endfunction()
 include(FetchContent)
 
 # Fetch Dependencies
-fetch_dependency(https://github.com/FermionicChaos/geodesy-math.git master geodesy-physics)
-fetch_dependency(https://github.com/FermionicChaos/geodesy-gpu.git master geodesy-gpu)
+fetch_dependency(https://gitlab.freedesktop.org/freetype/freetype.git VER-2-10-4 freetype)
+fetch_dependency(https://github.com/FermionicChaos/geodesy-physics.git master geodesy-physics)
+fetch_dependency(https://github.com/FermionicChaos/geodesy-gpu.git master geodesy-gpu VULKAN_SDK_STATIC_LIB=ON VULKAN_SDK_VERSION=1.4.321.0)
+
+# Needed for freetype zlib disable
+file(READ ${freetype_BINARY_DIR}/include/freetype/config/ftoption.h FreetypeConfig)
+string(REGEX REPLACE "#define FT_CONFIG_OPTION_USE_ZLIB" "// #define FT_CONFIG_OPTION_USE_ZLIB" FreetypeConfig "${FreetypeConfig}")
+file(WRITE ${freetype_BINARY_DIR}/include/freetype/config/ftoption.h "${FreetypeConfig}")
 
 set(PROJECT_NAME "geodesy-graphics")
 
@@ -62,9 +68,12 @@ project(${PROJECT_NAME})
 
 add_library(${PROJECT_NAME} ${INC} ${SRC})
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/inc/)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc/)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/dep/freetype/include/)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_BINARY_DIR}/_deps/freetype-build/include/)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/dep/geodesy-physics/inc/)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/dep/geodesy-gpu/inc/)
 
+target_link_libraries(${PROJECT_NAME} PUBLIC freetype)
 target_link_libraries(${PROJECT_NAME} PUBLIC geodesy-physics)
 target_link_libraries(${PROJECT_NAME} PUBLIC geodesy-gpu)
