@@ -44,7 +44,7 @@ function(fetch_dependency ADEP_NAME AGIT_REPO AGIT_TAG)
 endfunction()
 
 # Fetch Dependencies
-# fetch_dependency(freetype https://gitlab.freedesktop.org/freetype/freetype.git VER-2-10-4)
+fetch_dependency(freetype https://gitlab.freedesktop.org/freetype/freetype.git VER-2-13-2 CMAKE_POLICY_VERSION_MINIMUM=3.5)
 fetch_dependency(geodesy-physics https://github.com/FermionicChaos/geodesy-physics.git master)
 fetch_dependency(geodesy-gpu https://github.com/FermionicChaos/geodesy-gpu.git master VULKAN_SDK_STATIC_LIB=ON VULKAN_SDK_VERSION=1.4.321.0)
 
