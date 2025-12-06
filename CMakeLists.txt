@@ -3,7 +3,10 @@ cmake_minimum_required(VERSION 3.20)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(PROJECT_NAME "geodesy-graphics")
-    
+
+option(VULKAN_SDK_STATIC_LIB "Link Vulkan SDK statically" ON)
+option(VULKAN_SDK_VERSION "Version of Vulkan SDK to use" "1.4.321.0")
+
 include(FetchContent)
 
 # Utility function for fetching dependencies in one line.
@@ -46,7 +49,7 @@ endfunction()
 # Fetch Dependencies
 fetch_dependency(freetype https://gitlab.freedesktop.org/freetype/freetype.git VER-2-13-2 CMAKE_POLICY_VERSION_MINIMUM=3.5)
 fetch_dependency(geodesy-physics https://github.com/FermionicChaos/geodesy-physics.git master)
-fetch_dependency(geodesy-gpu https://github.com/FermionicChaos/geodesy-gpu.git master VULKAN_SDK_STATIC_LIB=ON VULKAN_SDK_VERSION=1.4.321.0)
+fetch_dependency(geodesy-gpu https://github.com/FermionicChaos/geodesy-gpu.git master VULKAN_SDK_STATIC_LIB=${VULKAN_SDK_STATIC_LIB} VULKAN_SDK_VERSION=${VULKAN_SDK_VERSION})
 
 # Needed for freetype zlib disable
 file(READ ${freetype_BINARY_DIR}/include/freetype/config/ftoption.h FreetypeConfig)
