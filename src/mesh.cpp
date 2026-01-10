@@ -246,8 +246,8 @@ namespace geodesy::gfx {
 		}
 
 		// Calculate properties of the mesh.
-		this->CenterOfMass = this->center_of_mass();
-		this->BoundingRadius = this->bounding_radius();
+		this->CenterOfMass = this->calculate_center_of_mass();
+		this->BoundingRadius = this->calculate_bounding_radius();
 	}
 	
 	mesh::mesh(std::shared_ptr<gpu::context> aContext, std::shared_ptr<mesh> aMesh) {
