@@ -48,13 +48,13 @@ namespace geodesy::gfx {
 		// Copy over non recurisve node data.
 		this->Identifier = aNode->mName.C_Str();
 		// TODO: Add Pos, Orientation, Scale
-		this->DefaultTransform = {
+		this->TransformToParentDefault = {
 			aNode->mTransformation.a1, aNode->mTransformation.a2, aNode->mTransformation.a3, aNode->mTransformation.a4,
 			aNode->mTransformation.b1, aNode->mTransformation.b2, aNode->mTransformation.b3, aNode->mTransformation.b4,
 			aNode->mTransformation.c1, aNode->mTransformation.c2, aNode->mTransformation.c3, aNode->mTransformation.c4,
 			aNode->mTransformation.d1, aNode->mTransformation.d2, aNode->mTransformation.d3, aNode->mTransformation.d4
 		};
-		this->CurrentTransform = this->DefaultTransform; // Set current transform to default.
+		this->TransformToParentCurrent = this->TransformToParentDefault; // Set current transform to default.
 		// Copy over mesh instance data from assimp node hierarchy.
 		this->MeshInstance.resize(aNode->mNumMeshes);
 		for (int i = 0; i < aNode->mNumMeshes; i++) {
@@ -146,9 +146,9 @@ namespace geodesy::gfx {
 			// This is only used to tranform mesh instance vertices without bone animation.
 			// Update Bone Buffer Date GPU side.
 			mesh::instance::uniform_data* UniformData = (mesh::instance::uniform_data*)MI.UniformBuffer->Ptr;
-			UniformData->Transform = this->GlobalTransform;
+			UniformData->Transform = this->TransformToWorld;
 			for (size_t i = 0; i < MI.Bone.size(); i++) {
-				UniformData->BoneTransform[i] = this->Root->find(MI.Bone[i].Name)->GlobalTransform;
+				UniformData->BoneTransform[i] = this->Root->find(MI.Bone[i].Name)->TransformToWorld;
 			}
 		}
 	}
