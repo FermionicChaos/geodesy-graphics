@@ -28,7 +28,7 @@ namespace geodesy::gfx {
 	// the mesh instance. Used for animations.
 
 	node::node() {
-		this->Type = node::GRAPHICS; // Default node type is graphics.
+		// Default constructor for graphics node
 	}
 
 	node::node(const aiScene* aScene, const aiNode* aNode, phys::node* aRoot, phys::node* aParent) : gfx::node() {
@@ -161,8 +161,8 @@ namespace geodesy::gfx {
 		// Find all graphics nodes in the hierarchy, and add mesh instances to the count.
 		size_t Count = 0;
 		for (phys::node* N : Nodes) {
-			if ((N->Type == phys::node::GRAPHICS) || (N->Type == phys::node::OBJECT)) {
-				gfx::node* GNode = static_cast<gfx::node*>(N);
+			gfx::node* GNode = dynamic_cast<gfx::node*>(N);
+			if (GNode) {
 				Count += GNode->MeshInstance.size();
 			}
 		}
@@ -179,8 +179,8 @@ namespace geodesy::gfx {
 
 		// Find all graphics nodes in the hierarchy, and add mesh instances to the count.
 		for (phys::node* N : Nodes) {
-			if ((N->Type == phys::node::GRAPHICS) || (N->Type == phys::node::OBJECT)) {
-				gfx::node* GNode = static_cast<gfx::node*>(N);
+			gfx::node* GNode = dynamic_cast<gfx::node*>(N);
+			if (GNode) {
 				for (gfx::mesh::instance& MI : GNode->MeshInstance) {
 					Instances.push_back(&MI);
 				}
