@@ -56,7 +56,7 @@ namespace geodesy::gfx {
 		};
 		this->TransformToParentCurrent = this->TransformToParentDefault; // Set current transform to default.
 		// Copy over mesh instance data from assimp node hierarchy.
-		this->MeshInstance.resize(aNode->mNumMeshes);
+		this->GraphicalMeshInstances.resize(aNode->mNumMeshes);
 		for (int i = 0; i < aNode->mNumMeshes; i++) {
 			// Get mesh index of mesh instance for this node.
 			int MeshIndex 						= aNode->mMeshes[i];
@@ -83,7 +83,7 @@ namespace geodesy::gfx {
 				);
 			}
 			// Load Mesh Instance Data
-			this->MeshInstance[i] = mesh::instance(Mesh->mNumVertices, BoneData, MeshIndex, Mesh->mMaterialIndex, this->Root, this);
+			this->GraphicalMeshInstances[i] = mesh::instance(Mesh->mNumVertices, BoneData, MeshIndex, Mesh->mMaterialIndex, this->Root, this);
 		}
 	}
 
@@ -108,16 +108,16 @@ namespace geodesy::gfx {
 	}
 
 	node::~node() {
-		this->MeshInstance.clear();
+		this->GraphicalMeshInstances.clear();
 	}
 
 	void node::copy_data(const phys::node* aNode) {
 		// Copy over the base class node data.
 		phys::node::copy_data(aNode);
 		// Copy over mesh instance data.
-		this->MeshInstance.resize(((gfx::node*)aNode)->MeshInstance.size());
-		for (size_t i = 0; i < this->MeshInstance.size(); i++) {
-			this->MeshInstance[i] = gfx::mesh::instance(this->Context, ((gfx::node*)aNode)->MeshInstance[i], this->Root, this);
+		this->GraphicalMeshInstances.resize(((gfx::node*)aNode)->GraphicalMeshInstances.size());
+		for (size_t i = 0; i < this->GraphicalMeshInstances.size(); i++) {
+			this->GraphicalMeshInstances[i] = gfx::mesh::instance(this->Context, ((gfx::node*)aNode)->GraphicalMeshInstances[i], this->Root, this);
 		}
 	}
 
@@ -142,7 +142,7 @@ namespace geodesy::gfx {
 		// For each mesh instance, and for each bone, update the 
 		// bone transformations according to their respective
 		// animation object.
-		for (mesh::instance& MI : MeshInstance) {
+		for (mesh::instance& MI : GraphicalMeshInstances) {
 			// This is only used to tranform mesh instance vertices without bone animation.
 			// Update Bone Buffer Date GPU side.
 			mesh::instance::uniform_data* UniformData = (mesh::instance::uniform_data*)MI.UniformBuffer->Ptr;
@@ -163,7 +163,7 @@ namespace geodesy::gfx {
 		for (phys::node* N : Nodes) {
 			gfx::node* GNode = dynamic_cast<gfx::node*>(N);
 			if (GNode) {
-				Count += GNode->MeshInstance.size();
+				Count += GNode->GraphicalMeshInstances.size();
 			}
 		}
 
@@ -181,7 +181,7 @@ namespace geodesy::gfx {
 		for (phys::node* N : Nodes) {
 			gfx::node* GNode = dynamic_cast<gfx::node*>(N);
 			if (GNode) {
-				for (gfx::mesh::instance& MI : GNode->MeshInstance) {
+				for (gfx::mesh::instance& MI : GNode->GraphicalMeshInstances) {
 					Instances.push_back(&MI);
 				}
 			}

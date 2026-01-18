@@ -175,7 +175,7 @@ namespace geodesy::gfx {
 	// 	// 		std::cout << "Bind Pose - Animation Transformation Matrix" << N->Transformation - A[N->Name][0.0] << std::endl;
 	// 	// 	}
 	// 	// 	// Print Mesh Instances
-	// 	// 	// for (mesh::instance& MI : N->MeshInstance) {
+	// 	// 	// for (mesh::instance& MI : N->GraphicalMeshInstances) {
 	// 	// 	// 	std::cout << "Mesh Instance: " << MI.Index << std::endl;
 	// 	// 	// 	std::cout << "Mesh Instance Transform: " << MI.Transform << std::endl;
 	// 	// 	// 	std::cout << "Mesh Instance Bone Data: " << std::endl;

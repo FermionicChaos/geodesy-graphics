@@ -17,7 +17,7 @@ namespace geodesy::gfx {
 	public:
 
 		std::shared_ptr<gpu::context> Context;
-		std::vector<mesh::instance> MeshInstance; // Mesh Instance located in node hierarchy.
+		std::vector<mesh::instance> GraphicalMeshInstances; // Mesh Instance located in node hierarchy.
 
 		node();
 		node(const aiScene* aScene, const aiNode* aNode, phys::node* aRoot = nullptr, phys::node* aParent = nullptr);
