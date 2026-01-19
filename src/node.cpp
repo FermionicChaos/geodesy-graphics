@@ -124,20 +124,18 @@ namespace geodesy::gfx {
 	void node::host_update(
 		double 										aDeltaTime, 
 		double 										aTime, 
-		const std::vector<phys::force>& 			aAppliedForces,
 		const std::vector<phys::animation>& 		aPlaybackAnimation,
 		const std::vector<float>& 					aAnimationWeight
 	) {
 
 		// Call the base class update function to update the node data.
-		phys::node::host_update(aDeltaTime, aTime, aAppliedForces, aPlaybackAnimation, aAnimationWeight);
+		phys::node::host_update(aDeltaTime, aTime, aPlaybackAnimation, aAnimationWeight);
 
 	}
 
 	void node::device_update(
 		double 									aDeltaTime, 
-		double 									aTime, 
-		const std::vector<phys::force>& 		aAppliedForces
+		double 									aTime
 	) {
 		// For each mesh instance, and for each bone, update the 
 		// bone transformations according to their respective
