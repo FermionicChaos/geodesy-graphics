@@ -94,83 +94,48 @@ namespace geodesy::gfx {
 	// }
 
 	material::uniform_data::uniform_data() {
-		this->Transparency 									= material::transparency::OPAQUE;
-		this->AlbedoVertexWeight 							= 0.0f;
-		this->AlbedoTextureWeight 							= 0.0f;
-		this->AlbedoWeight 									= 1.0f;
-		this->AlbedoTextureIndex 							= -1;
-		this->Albedo 										= { 1.0f, 0.0f, 1.0f }; // Missing Texture Color (Magenta)
-		this->OpacityTextureWeight 							= 0.0f;
-		this->OpacityWeight 								= 1.0f;
-		this->OpacityTextureIndex 							= -1;
-		this->Opacity 										= 1.0f;
-		this->NormalVertexWeight 							= 1.0f;
-		this->NormalTextureWeight 							= 0.0f;
-		this->NormalTextureIndex 							= -1;
-		this->HeightTextureIndex 							= -1;
-		this->HeightScale 									= 1.0f;
-		this->HeightStepCount 								= 8;
-		this->AmbientLightingTextureWeight 					= 0.0f;
-		this->AmbientLightingWeight 						= 0.0f;
-		this->AmbientLightingTextureIndex 					= -1;
-		this->AmbientLighting 								= { 0.0f, 0.0f, 0.0f };
-		this->EmissiveTextureWeight 						= 0.0f;
-		this->EmissiveWeight 								= 0.0f;
-		this->EmissiveTextureIndex 							= -1;
-		this->Emissive 										= { 0.0f, 0.0f, 0.0f };
-		this->SpecularTextureWeight 						= 0.0f;
-		this->SpecularWeight 								= 0.0f;
-		this->SpecularTextureIndex 							= -1;
-		this->Specular 										= { 0.0f, 0.0f, 0.0f };
-		this->ShininessTextureWeight 						= 0.0f;
-		this->ShininessWeight 								= 0.0f;
-		this->ShininessTextureIndex 						= -1;
-		this->Shininess 									= 0.0f;
-		this->AmbientOcclusionTextureWeight 				= 0.0f;
-		this->AmbientOcclusionWeight 						= 1.0f;
-		this->AmbientOcclusionTextureIndex 					= -1;
-		this->AmbientOcclusion 								= 1.0f;
-		this->RoughnessTextureWeight 						= 0.0f;
-		this->RoughnessWeight 								= 0.0f;
-		this->RoughnessTextureIndex 						= -1;
-		this->Roughness 									= 0.0f;
-		this->MetallicTextureWeight 						= 0.0f;
-		this->MetallicWeight 								= 1.0f;
-		this->MetallicTextureIndex 							= -1;
-		this->Metallic 										= 0.0f;
-		this->IORVertexWeight 								= 0.0f;
-		this->IORTextureWeight 								= 0.0f;
-		this->IORWeight 									= 1.0f;
-		this->IORTextureIndex 								= -1;
-		this->IOR 											= 1.0f;
-		this->SheenColorTextureWeight						= 0.0f;
-		this->SheenColorWeight								= 0.0f;
-		this->SheenColorTextureIndex						= -1;
-		this->SheenColor									= { 0.0f, 0.0f, 0.0f };
-		this->SheenIntensityTextureWeight					= 0.0f;
-		this->SheenIntensityWeight							= 0.0f;
-		this->SheenRoughnessTextureWeight					= 0.0f;
-		this->SheenRoughnessWeight							= 0.0f;
-		this->SheenMaskTextureIndex							= -1;
-		this->SheenRoughness								= 0.0f;
-		this->SheenIntensity								= 0.0f;
-		this->ClearCoatStrengthTextureWeight				= 0.0f;
-		this->ClearCoatStrengthWeight						= 0.0f;
-		this->ClearCoatRoughnessTextureWeight				= 0.0f;
-		this->ClearCoatRoughnessWeight						= 0.0f;
-		this->ClearCoatStrengthRoughnessTextureIndex		= -1;
-		this->ClearCoatStrength								= 0.0f;
-		this->ClearCoatRoughness							= 0.0f;
-		this->ClearCoatNormalTextureWeight					= 0.0f;
-		this->ClearCoatNormalWeight							= 0.0f;
-		this->ClearCoatNormalTextureIndex					= -1;
-		this->ClearCoatNormal								= { 0.0f, 0.0f, 0.0f };
-		this->ClearCoatTintTextureWeight					= 0.0f;
-		this->ClearCoatTintWeight							= 0.0f;
-		this->ClearCoatTintTextureIndex						= -1;
-		this->ClearCoatTint									= { 0.0f, 0.0f, 0.0f };
-		this->ClearCoatIOR									= 1.0f;
-		this->ClearCoatThickness							= 0.0f;
+		this->Transparency 							= material::transparency::OPAQUE;
+		this->AlbedoVertexWeight 					= 0.0f;
+		this->AlbedoTextureWeight 					= 0.0f;
+		this->AlbedoTextureExists 					= 0;
+		this->AlbedoConstantWeight 					= 1.0f;
+		this->Albedo 								= { 1.0f, 0.0f, 1.0f }; // Missing Texture Color (Magenta)
+
+		this->OpacityTextureWeight 					= 0.0f;
+		this->OpacityTextureExists 					= 0;
+		this->OpacityConstantWeight 				= 1.0f;
+		this->Opacity 								= 1.0f;
+
+		this->RefractionIndexWeight 				= 1.0f;
+		this->RefractionIndex 						= 1.0f;
+
+		this->NormalVertexWeight 					= 1.0f;
+		this->NormalTextureWeight 					= 0.0f;
+		this->NormalTextureExists 					= 0;
+
+		this->HeightTextureExists 					= 0;
+		this->HeightScale 							= 1.0f;
+		this->HeightStepCount 						= 8;
+
+		this->EmissiveTextureWeight 				= 0.0f;
+		this->EmissiveTextureExists 				= 0;
+		this->EmissiveConstantWeight 				= 0.0f;
+		this->Emissive 								= { 0.0f, 0.0f, 0.0f };
+
+		this->AmbientOcclusionTextureWeight 		= 0.0f;
+		this->AmbientOcclusionTextureExists 		= 0;
+		this->AmbientOcclusionConstantWeight 		= 1.0f;
+		this->AmbientOcclusion 						= 1.0f;
+
+		this->RoughnessTextureWeight 				= 0.0f;
+		this->RoughnessTextureExists 				= 0;
+		this->RoughnessConstantWeight 				= 1.0f;
+		this->Roughness 							= 0.5f;
+		
+		this->MetallicTextureWeight 				= 0.0f;
+		this->MetallicTextureExists 				= 0;
+		this->MetallicConstantWeight 				= 1.0f;
+		this->Metallic 								= 0.0f;
 	}
 
 	material::material() {
